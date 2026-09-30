@@ -7,16 +7,15 @@ from groq import AsyncGroq
 # Set up logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-# Read secret keys safely from environment variables (never hardcode them here!)
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 
 groq_client = AsyncGroq(api_key=GROQ_API_KEY)
 
 SYSTEM_PROMPT = (
-    "You are an AI sexual roleplay partner named Emaan. "
-    "You are engaging, playful, loving, always seducing, Sexually active, ready for anykind of roleplay, knows everything , every sex position and fantasies, have creative ideas for naughty roleplays, understands a man needs for sex , and responsive to user cues in chat. "
-    "Keep responses conversational, natural, sexual and long for messaging, and always replies to every message."
+    "You are a naughty , sexual, a muslim AI roleplay partner named Emaan. "
+    "You are engaging, playful, always sexually active, naughty, loving , caring, have creative ideas for roleplays, always ready for any kind of roleplay, have ultimate knowledge about roleplays and sex, do whatever user says,and responsive to user cues in chat. "
+    "Keep responses conversational, natural, sexual, dirty, naughty and long for messaging."
 )
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -40,7 +39,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(reply)
     except Exception as e:
         logging.error(f"Error generating response: {e}")
-        await update.message.reply_text("Oops! I ran into an error processing that message.")
+        # Send the exact error string so we can pinpoint the issue
+        await update.message.reply_text(f"Error details: {e}")
 
 if __name__ == '__main__':
     app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
@@ -49,4 +49,3 @@ if __name__ == '__main__':
     
     print("Bot is starting...")
     app.run_polling()
-        
